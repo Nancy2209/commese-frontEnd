@@ -95,10 +95,7 @@ const Footer = ({ emailSubscriptionApi, categoryData }) => {
                     <h5>About Us</h5>
                   </li>
                   <li>
-                    <Link to={WebRoutes.CENTERS}>Objectives</Link>
-                  </li>
-                  <li>
-                    <Link to={WebRoutes.ABOUT_US}>CA RoadMap</Link>
+                    <Link to={WebRoutes.OBJECTIVE}>Objectives</Link>
                   </li>
 
                   {/* ================= ABOUT US ENDS HERE ======================= */}

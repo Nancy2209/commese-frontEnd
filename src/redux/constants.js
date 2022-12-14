@@ -50,7 +50,7 @@ export const DEMO_VIDEO_DETAIL = `${BASE_URL}/demo-video-detail/`;
 
 export const BLOG_CATEGORY = `${BASE_URL}/blog-category`;
 
-//Default demo detail List api
+//Default blog detail List api
 export const DEFAULT_BLOG = `${BASE_URL}/default-blog-list`;
 
 //Demo Video  Details  api
@@ -88,3 +88,6 @@ export const DEFAULT_DEMO_VIDEO = `${BASE_URL}/default-demo-list`;
 
 //Course search api
 export const COURSE_SEARCH_API = `${BASE_URL}/course-search`;
+
+//Coupon api
+export const COUPON_LIST = `${BASE_URL}/coupon-offer`;

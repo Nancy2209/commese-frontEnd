@@ -8,12 +8,14 @@ import OwlCarousel from "react-owl-carousel";
 import { demoVideoListApi, demoVideoDetailApi } from "../../../redux/action/demoVideo";
 import { useEffect } from "react";
 import { topperListAPI, categoryBaodStandardsListAPI, cityListAPI, AreaListAPI } from "../../../redux/action/home";
-import { categoryListApi, categoryDetailsApi, courseSearchDetailAPI } from "../../../redux/action/category";
+import { categoryListApi, categoryDetailsApi, courseSearchDetailAPI, couponListAPI } from "../../../redux/action/category";
 import Connect from "../Dashboard/Connect";
 import { parseHtml } from "../../../Utils/utils";
 import { IMAGE_BASE_URL } from "../../../redux/constants";
+import Recommendation from "./Recommendation";
 
-const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, demoVideoListApi, topperListAPI, toppersData, categoryData, cityListAPI, courseSearchDetailAPI, courseSearchDetailsData }) => {
+const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, demoVideoListApi, topperListAPI, toppersData, categoryData, cityListAPI, courseSearchDetailAPI, courseSearchDetailsData, coup\
+ }) => {
   const [categoryActive, setCategoryActive] = useState(localStorage.getItem("categorySelectedId"));
   const [courseSearch, setCourseSearch] = useState(courseSearchDetailsData);
   const [search, setSearch] = useState();
@@ -52,7 +54,7 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
                 <div className="row">
                   <div className="col-md-8">
                     <h2>
-                      <span className="text-blue">Benifitting Courses </span>
+                      <span className="text-blue">Benefitting Courses </span>
                       <br />
                       for Every Student
                     </h2>
@@ -97,8 +99,6 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
                 <div className="tab-pane fade show active" id="MT-tabPane-1" role="tabpanel" aria-labelledby="Edu-tab-1" tabindex="0">
                   {/* <!-- explore-lakshya --> */}
                   <OwlCarousel>
-                    {/* {console.log(courseSearchDetailsData && 'vishnu' + courseSearchDetailsData.data.length)} */}
-
                     {courseSearch && courseSearchDetailsData.data ? (
                       <>
                         {courseSearchDetailsData &&
@@ -168,6 +168,7 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
 
       {/* =========================== CONNECT SECTION STARTS HERE =============*/}
       {/* =========================== CONNECT SECTION ENDS HERE ================ */}
+      <Recommendation />
       <Connect />
     </>
   );

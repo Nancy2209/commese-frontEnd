@@ -11,7 +11,6 @@ import { parseHtml } from "../../../Utils/utils";
 const OurResults = ({ resultListApi, resultListData, resultDetailApi, resultDetailData, defaultResultDetailData, defaultResultListApi }) => {
   const [activeTab, setActiveTab] = useState(resultListData && resultListData.data && resultListData.data[0] && resultListData.data[0].id);
   const [activeTabDetail, setActiveTabDetail] = useState();
-  console.log(resultListData);
   useEffect(() => {
     resultListApi();
     defaultResultListApi();
@@ -105,6 +104,7 @@ const OurResults = ({ resultListApi, resultListData, resultDetailApi, resultDeta
 
                                     <div className="tag-link flex-none">
                                       <div className="tag blue bg-light-blue">{item && item.name}</div>
+                                      <div className="tag blue bg-light-blue">{item && item.year}</div>
                                       {/* <div className="tag bg-light-orange">{item && item.subject_tag}</div> */}
                                       {/* <div className="tag bg-light-orange">{item && item.standard_tag}</div> */}
                                     </div>

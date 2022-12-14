@@ -11,7 +11,6 @@ import { parseHtml } from "../../../Utils/utils";
 const Blog = ({ blogListApi, blogListData, blogDetailApi, blogDetailData, defaultBlogDetailData, defaultBlogListApi }) => {
   const [activeTab, setActiveTab] = useState(blogListData && blogListData.data && blogListData.data[0] && blogListData.data[0].id);
   const [activeTabDetail, setActiveTabDetail] = useState();
-  console.log(blogDetailData);
   useEffect(() => {
     blogListApi();
     defaultBlogListApi();
@@ -52,7 +51,7 @@ const Blog = ({ blogListApi, blogListData, blogDetailApi, blogDetailData, defaul
           <div className="row">
             <div className="col-md-12 box-radius">
               <h3 className="headline text-center mb-3">
-                our <span className="text-blue">Blogs</span>
+                Explore Our <span className="text-blue">Blogs</span>
               </h3>
               <p className="sub-headline text-center">Take a look at some of our demo sessions to get an idea for what we stand for in educating our student.</p>
             </div>
@@ -156,7 +155,6 @@ const Blog = ({ blogListApi, blogListData, blogDetailApi, blogDetailData, defaul
 
 const mapStateToProps = (state) => {
   const { BlogReducer } = state;
-  // const { blogListData, blogDetailData, defaultBlogDetailData } = BlogReducer;
   return {
     blogListData: BlogReducer.blogListData,
     blogDetailData: BlogReducer.blogDetailData,

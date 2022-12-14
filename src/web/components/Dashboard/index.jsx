@@ -153,7 +153,7 @@ const Dashboard = ({ categoryListApi, defaultCategoryListApi, categoryDetailsApi
                         <div className="col-md-7 col-sm-12">
                           <div className="caption">
                             <h2>
-                              <span className="text-blue">Tailored Courses</span> for Success in commerce.
+                              <span className="text-blue">Tailored Courses</span> for Success in Commerce.
                             </h2>
                             <p className="mt-3">Will you be the next star of MT Educare? Accomplish greatness and be a part of our legacy. Find your course now.</p>
                           </div>

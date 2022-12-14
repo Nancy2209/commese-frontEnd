@@ -20,6 +20,8 @@ import Blog from "./web/components/Dashboard/Blog";
 import ImportantLinks from "./web/components/Dashboard/ImportantLinks";
 import OurResults from "./web/components/OtherPages/OurResults";
 import DemoVedios from "./web/components/Dashboard/Demo-vedios";
+import Objectives from "./web/components/AboutUs/Objectives";
+import Recommendation from "./web/components/Category/Recommendation";
 
 function App() {
   return (
@@ -45,6 +47,10 @@ function App() {
             <Route path={WebRoutes.DEMO_VIDEO} element={<DemoVedios />} />
 
             <Route path={WebRoutes.RESULTS} element={<OurResults />} />
+
+            <Route path={WebRoutes.OBJECTIVE} element={<Objectives />} />
+
+            <Route path={WebRoutes.RECOMMENDATION} element={<Recommendation />} />
 
             <Route path={WebRoutes.PHOTO_GALLARY} element={<PhotoGallary />} />
 

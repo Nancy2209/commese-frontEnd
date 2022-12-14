@@ -1814,6 +1814,10 @@ nav[aria-label="breadcrumb"] {
   text-align: center;
 }
 
+.management .col-md-4:nth-child(even) .card-address h5 {
+  background-color: var(--light-blue);
+}
+
 .job-openings .col-md-4:nth-child(even) .card-address h5 {
   background-color: var(--creame);
 }

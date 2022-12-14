@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CATEGORY_LIST, CATEGORY_DETAILS, DEFAULT_COURSE, COURSE_SEARCH_API } from "../constants";
+import { CATEGORY_LIST, CATEGORY_DETAILS, DEFAULT_COURSE, COURSE_SEARCH_API, COUPON_LIST } from "../constants";
 import { getCommonApiHeader } from "../../Utils/utils";
 
 export const categoryListApi = (data) => {
@@ -82,6 +82,26 @@ export const courseSearchDetailAPI = (data) => {
   };
 };
 
+export const couponListAPI = (data) => {
+  return (dispatch, getState) => {
+    dispatch(getCouponRequest());
+    axios
+      .get(COUPON_LIST, data, {
+        headers: {
+          ...getCommonApiHeader(),
+        },
+      })
+      .then((response) => {
+        if (response) {
+          dispatch(getCourseSearchDetailDataRespond(response?.data));
+        }
+      })
+      .catch((err) => {
+        dispatch(handleError(err));
+      });
+  };
+};
+
 export const getCategoryDataRequest = (data) => {
   return {
     type: "CATEGORY_Data_REQUESTED",
@@ -111,6 +131,19 @@ export const getDefaultCategoryDetailDataRespond = (data) => {
 export const getCourseSearchDetailDataRespond = (data) => {
   return {
     type: "COURSE_SEARCH_DETAILS_DATA_RESPONSE",
+    data: data,
+  };
+};
+
+export const getCouponRequest = (data) => {
+  return {
+    type: "COUPON_Data_REQUESTED",
+  };
+};
+
+export const getCouponDataRespond = (data) => {
+  return {
+    type: "COUPON_DATA_RESPONSE",
     data: data,
   };
 };

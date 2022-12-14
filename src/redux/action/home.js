@@ -57,7 +57,6 @@ export const cityListAPI = (data) => {
 };
 
 export const AreaListAPI = (data) => {
-  console.log("vishnu" + data);
   return (dispatch, getState) => {
     dispatch(getHomeRequest());
     axios
