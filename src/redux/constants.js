@@ -91,3 +91,9 @@ export const COURSE_SEARCH_API = `${BASE_URL}/course-search`;
 
 //Coupon api
 export const COUPON_LIST = `${BASE_URL}/coupon-offer`;
+
+//Recommendation List api
+export const RECOMMENDATION_CATEGORY = `${BASE_URL}/recommendation-category`;
+
+//Recommendation List api
+export const RECOMMENDATION_DETAILS = `${BASE_URL}/recommendation-list`;

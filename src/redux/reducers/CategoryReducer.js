@@ -4,6 +4,8 @@ const initState = {
   defaultCategoryDetailsData: [],
   courseSearchDetailsData: [],
   couponData: [],
+  recommendationData: [],
+  recommendationDetailData: [],
   error: null,
 };
 const CategoryReducer = (state = initState, action) => {
@@ -42,6 +44,22 @@ const CategoryReducer = (state = initState, action) => {
         ...state,
         couponData: data,
       };
+    case "RECOMMENDATION_REQUEST":
+      return {
+        ...state,
+      };
+    case "RECOMMENDATION_DATA_RESPONSE":
+      return {
+        ...state,
+        recommendationData: data,
+      };
+
+    case "RECOMMDETAIL_DATA_RESPONSE":
+      return {
+        ...state,
+        recommendationDetailData: data,
+      };
+
     case "CATEGORY_ERROR":
       return {
         ...state,

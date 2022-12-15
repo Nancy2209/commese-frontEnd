@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CATEGORY_LIST, CATEGORY_DETAILS, DEFAULT_COURSE, COURSE_SEARCH_API, COUPON_LIST } from "../constants";
+import { CATEGORY_LIST, CATEGORY_DETAILS, DEFAULT_COURSE, COURSE_SEARCH_API, COUPON_LIST, RECOMMENDATION_CATEGORY, RECOMMENDATION_DETAILS } from "../constants";
 import { getCommonApiHeader } from "../../Utils/utils";
 
 export const categoryListApi = (data) => {
@@ -93,7 +93,46 @@ export const couponListAPI = (data) => {
       })
       .then((response) => {
         if (response) {
-          dispatch(getCourseSearchDetailDataRespond(response?.data));
+          dispatch(getCouponDataRespond(response?.data));
+        }
+      })
+      .catch((err) => {
+        dispatch(handleError(err));
+      });
+  };
+};
+
+export const recommendationListApi = (data) => {
+  return (dispatch, getState) => {
+    dispatch(getRecommendationDataRequest());
+    axios
+      .get(RECOMMENDATION_CATEGORY, {
+        headers: {
+          ...getCommonApiHeader(),
+        },
+      })
+      .then((response) => {
+        if (response) {
+          dispatch(getRECOMMENDATIONDataRespond(response?.data));
+        }
+      })
+      .catch((err) => {
+        dispatch(handleError(err));
+      });
+  };
+};
+export const recommendationDetailApi = (data) => {
+  return (dispatch, getState) => {
+    dispatch(getRecommendationDataRequest());
+    axios
+      .get(RECOMMENDATION_DETAILS + "" + data, {
+        headers: {
+          ...getCommonApiHeader(),
+        },
+      })
+      .then((response) => {
+        if (response) {
+          dispatch(getRECOMMDETAILDataRespond(response?.data));
         }
       })
       .catch((err) => {
@@ -144,6 +183,26 @@ export const getCouponRequest = (data) => {
 export const getCouponDataRespond = (data) => {
   return {
     type: "COUPON_DATA_RESPONSE",
+    data: data,
+  };
+};
+
+export const getRecommendationDataRequest = (data) => {
+  return {
+    type: "RECOMMENDATION_Data_REQUESTED",
+  };
+};
+
+export const getRECOMMDETAILDataRespond = (data) => {
+  return {
+    type: "RECOMMENDATION_DETAILS_DATA_RESPONSE",
+    data: data,
+  };
+};
+
+export const getRECOMMENDATIONDataRespond = (data) => {
+  return {
+    type: "RECOMMENDATION_DATA_RESPONSE",
     data: data,
   };
 };

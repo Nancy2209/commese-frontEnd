@@ -8,24 +8,25 @@ import OwlCarousel from "react-owl-carousel";
 import { demoVideoListApi, demoVideoDetailApi } from "../../../redux/action/demoVideo";
 import { useEffect } from "react";
 import { topperListAPI, categoryBaodStandardsListAPI, cityListAPI, AreaListAPI } from "../../../redux/action/home";
-import { categoryListApi, categoryDetailsApi, courseSearchDetailAPI, couponListAPI } from "../../../redux/action/category";
+import { categoryListApi, categoryDetailsApi, courseSearchDetailAPI, couponListAPI, recommendationListApi, recommendationDetailApi } from "../../../redux/action/category";
 import Connect from "../Dashboard/Connect";
 import { parseHtml } from "../../../Utils/utils";
 import { IMAGE_BASE_URL } from "../../../redux/constants";
 import Recommendation from "./Recommendation";
 
-const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, demoVideoListApi, topperListAPI, toppersData, categoryData, cityListAPI, courseSearchDetailAPI, courseSearchDetailsData, coup\
- }) => {
+const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, demoVideoListApi, topperListAPI, toppersData, categoryData, cityListAPI, courseSearchDetailAPI, courseSearchDetailsData, couponListAPI, couponData }) => {
   const [categoryActive, setCategoryActive] = useState(localStorage.getItem("categorySelectedId"));
   const [courseSearch, setCourseSearch] = useState(courseSearchDetailsData);
   const [search, setSearch] = useState();
   const [indexData, setIndexData] = useState(0);
 
   useEffect(() => {
+    couponListAPI();
     demoVideoListApi();
     topperListAPI();
     categoryListApi();
     cityListAPI();
+
     categoryDetailsApi(localStorage.getItem("categorySelectedId"));
   }, []);
   const handleCategoryId = (id) => {
@@ -44,6 +45,8 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
       setCourseSearch("");
     }
   };
+
+  console.log(couponData.data && couponData.data);
   return (
     <>
       <section className="cards" id="courses">
@@ -54,11 +57,14 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
                 <div className="row">
                   <div className="col-md-8">
                     <h2>
-                      <span className="text-blue">Benefitting Courses </span>
+                      <span className="text-blue">{couponData.data && couponData.data.coupon_code}</span>
                       <br />
                       for Every Student
                     </h2>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+                    <>
+                      <h1>{couponData.data && couponData.data.coupon_code}</h1>
+                    </>
                   </div>
                 </div>
               </div>
@@ -114,7 +120,7 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
                                   <div className="detail">
                                     <h5>{item && item.title}</h5>
                                     <div className="description">
-                                      <p>{item && parseHtml(item.description.substring(0, 300))} sdssd</p>
+                                      <p>{item && parseHtml(item.description.substring(0, 300))}</p>
                                     </div>
                                     {/* <div className="tag-link">
                                       <div className="tag">{item.tag_name}</div>
@@ -140,7 +146,8 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
                                   <div className="detail">
                                     <h5>{item && item.title}</h5>
                                     <div className="description">
-                                      <p>{item && parseHtml(item.description.substring(0, 300))} </p>
+                                      {" "}
+                                      <p>{item && parseHtml(item.description.substring(0, 300))} </p>{" "}
                                     </div>
                                     {/* <div className="tag-link">
                                       <div className="tag">{item.tag_name}</div>
@@ -168,7 +175,7 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
 
       {/* =========================== CONNECT SECTION STARTS HERE =============*/}
       {/* =========================== CONNECT SECTION ENDS HERE ================ */}
-      <Recommendation />
+      {/* <Recommendation /> */}
       <Connect />
     </>
   );
@@ -178,8 +185,9 @@ const mapStateToProps = (state) => {
   const { DemoVideoReducer, HomeReducer, CategoryReducer } = state;
   const { demoListData, videoDetailData } = DemoVideoReducer;
   const { toppersData, cityData, areaData } = HomeReducer;
-  const { categoryData, categoryDetailsData, courseSearchDetailsData } = CategoryReducer;
+  const { categoryData, categoryDetailsData, courseSearchDetailsData, couponData } = CategoryReducer;
   return {
+    couponData: CategoryReducer.couponData,
     demoListData: DemoVideoReducer.demoListData,
     videoDetailData: DemoVideoReducer.videoDetailData,
     toppersData: HomeReducer.toppersData,
@@ -194,6 +202,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    couponListAPI: () => dispatch(couponListAPI()),
     demoVideoListApi: () => dispatch(demoVideoListApi()),
     topperListAPI: () => dispatch(topperListAPI()),
     demoVideoDetailApi: (data) => dispatch(demoVideoDetailApi(data)),
@@ -203,6 +212,7 @@ const mapDispatchToProps = (dispatch) => {
     AreaListAPI: (data) => dispatch(AreaListAPI(data)),
     categoryDetailsApi: (data) => dispatch(categoryDetailsApi(data)),
     courseSearchDetailAPI: (data) => dispatch(courseSearchDetailAPI(data)),
+    // couponListAPI: () => dispatch(couponListAPI()),
   };
 };
 
