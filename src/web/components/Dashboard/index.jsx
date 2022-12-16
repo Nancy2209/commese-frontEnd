@@ -12,14 +12,16 @@ import Slider from "react-slick";
 import { Form, Input, Select } from "antd";
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import { topperListAPI, categoryBaodStandardsListAPI, cityListAPI, AreaListAPI } from "../../../redux/action/home";
+import { topperListAPI, categoryBaodStandardsListAPI, cityListAPI, AreaListAPI, studentHearApi } from "../../../redux/action/home";
 import { categoryListApi, categoryDetailsApi, defaultCategoryListApi } from "../../../redux/action/category";
 import { WebRoutes } from "../../../routes";
 import { parseHtml } from "../../../Utils/utils";
 import { IMAGE_BASE_URL } from "../../../redux/constants";
 import Blog from "./Blog";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const Dashboard = ({ categoryListApi, defaultCategoryListApi, categoryDetailsApi, topperListAPI, toppersData, categoryBaodStandardsListAPI, boardStandardsData, categoryData, cityListAPI, AreaListAPI, cityData, areaData, categoryDetailsData, defaultCategoryDetailsData }) => {
+const Dashboard = ({ categoryListApi, defaultCategoryListApi, categoryDetailsApi, topperListAPI, toppersData, categoryBaodStandardsListAPI, boardStandardsData, categoryData, cityListAPI, AreaListAPI, cityData, areaData, categoryDetailsData, defaultCategoryDetailsData, studentHearApi, studentHearData }) => {
   // console.log(categoryData && categoryData.data && categoryData.data[0].id);
   const [categoryActive, setCategoryActive] = useState(0);
 
@@ -101,6 +103,7 @@ const Dashboard = ({ categoryListApi, defaultCategoryListApi, categoryDetailsApi
     topperListAPI();
     defaultCategoryListApi();
     // categoryListApi();
+    studentHearApi();
     cityListAPI();
   }, []);
 
@@ -125,6 +128,12 @@ const Dashboard = ({ categoryListApi, defaultCategoryListApi, categoryDetailsApi
       area: area,
     };
     localStorage.setItem("centersearch", data);
+  };
+  const boardfilter = boardStandardsData && boardStandardsData.data && [...new Set(boardStandardsData.data.map((q) => q.board_name))];
+  const standardfilter = boardStandardsData && boardStandardsData.data && [...new Set(boardStandardsData.data.map((q) => q.name))];
+  const handleBoardStandars = (e) => {
+    setCategory(e.target.value);
+    categoryBaodStandardsListAPI(e.target.value);
   };
 
   const handleCategoryId = (id) => {
@@ -195,56 +204,74 @@ const Dashboard = ({ categoryListApi, defaultCategoryListApi, categoryDetailsApi
               >
                 <div className="floating-form in-banner">
                   <div className="form-controls">
-                    <Form.Item label="Category" name="category" className="form-label" rules={[{ required: true, message: "Please select your category!" }]}>
-                      <select name="course" className="form-controls w-100" id="course" value={category} onChange={(e) => setCategory(e.target.value)} required>
-                        <option disabled selected hidden>
-                          Select category
+                    <Form.Item label="Category" name="category" className="form-label">
+                      <select name="course" className="form-controls w-100" id="course" value={category} onChange={(e) => handleBoardStandars(e)}>
+                        <option defaultValue selected>
+                          Select Category
                         </option>
-                        {categoryData && categoryData.data && categoryData.data.map((item) => <option value={item.id}>{item.name}</option>)}
+                        {categoryData &&
+                          categoryData.data &&
+                          categoryData.data.map((item, index) => (
+                            <option value={item.id} key={index}>
+                              {item.name}
+                            </option>
+                          ))}
                       </select>
                     </Form.Item>
                   </div>
 
                   <div className="form-controls">
-                    <Form.Item label="Baord" name="board" className="form-label" rules={[{ required: true, message: "Please select your board!" }]}>
-                      <select name="boards" className="form-controls w-100" id="boards" value={boards} onChange={(e) => setBoards(e.target.value)} required>
-                        <option disabled selected hidden>
-                          Select board
+                    <Form.Item label="Baord" name="board" className="form-label">
+                      <select name="boards" className="form-controls w-100" id="boards" value={boards} onChange={(e) => setBoards(e.target.value)}>
+                        <option defaultValue selected>
+                          Select Board
                         </option>
-                        {boardStandardsData && boardStandardsData.data && boardStandardsData.data.map((item) => <option value={item.board_name}>{item.board_name}</option>)}
+                        {boardfilter && boardfilter.map((item) => <option value={item}>{item}</option>)}
                       </select>
                     </Form.Item>
                   </div>
 
                   <div className="form-controls">
-                    <Form.Item label="Standards" name="standards" className="form-label" rules={[{ required: true, message: "Please select your standard!" }]}>
-                      <select name="standards" id="standards" className="form-controls w-100" value={standards} onChange={(e) => setStandards(e.target.value)} required>
-                        <option disabled selected hidden>
-                          Select Standards
+                    <Form.Item label="Standards" name="standards" className="form-label">
+                      <select name="standards" id="standards" className="form-controls w-100" value={standards} onChange={(e) => setStandards(e.target.value)}>
+                        <option defaultValue selected>
+                          Select Standard
                         </option>
-                        {boardStandardsData && boardStandardsData.data && boardStandardsData.data.map((item) => <option value={item.id}>{item.name}</option>)}
+                        {standardfilter && standardfilter.map((item) => <option value={item}>{item}</option>)}
                       </select>
                     </Form.Item>
                   </div>
 
                   <div className="form-controls">
-                    <Form.Item label="City" name="city" className="form-label" rules={[{ required: true, message: "Please select your city!" }]}>
-                      <select name="standards" id="standards" value={city} onChange={(e) => handleCityChange(e)} className="form-controls w-100" required>
-                        <option disabled selected hidden>
-                          Select city
+                    <Form.Item label="City" name="city" className="form-label">
+                      <select name="standards" id="standards" value={city} onChange={(e) => handleCityChange(e)} className="form-controls w-100">
+                        <option defaultValue selected>
+                          Select City
                         </option>
-                        {cityData && cityData.data && cityData.data.map((item) => <option value={item.id}>{item.name}</option>)}
+                        {cityData &&
+                          cityData.data &&
+                          cityData.data.map((item, index) => (
+                            <option value={item.id} key={index}>
+                              {item.name}
+                            </option>
+                          ))}
                       </select>
                     </Form.Item>
                   </div>
 
                   <div className="form-controls">
-                    <Form.Item label="Area" name="area" className="form-label" rules={[{ required: true, message: "Please select your area!" }]}>
-                      <select name="area" id="area" className="form-controls w-100" value={area} onChange={(e) => setArea(e.target.value)} required>
-                        <option disabled selected hidden>
-                          Select city
+                    <Form.Item label="Area" name="area" className="form-label">
+                      <select name="area" id="area" className="form-controls w-100" value={area} onChange={(e) => setArea(e.target.value)}>
+                        <option defaultValue selected>
+                          Select Area
                         </option>
-                        {areaData && areaData.data && areaData.data.map((item) => <option value={item.id}>{item.name}</option>)}
+                        {areaData &&
+                          areaData.data &&
+                          areaData.data.map((item, index) => (
+                            <option value={item.id} key={index}>
+                              {item.name}
+                            </option>
+                          ))}
                       </select>
                     </Form.Item>
                   </div>
@@ -432,7 +459,7 @@ const Dashboard = ({ categoryListApi, defaultCategoryListApi, categoryDetailsApi
 
                 {/* <Blog /> */}
 
-                <Feedback />
+                <Feedback studentHearData={studentHearData} />
 
                 <Connect />
 
@@ -458,6 +485,7 @@ const mapStateToProps = (state) => {
     cityData: HomeReducer.cityData,
     areaData: HomeReducer.areaData,
     categoryData: CategoryReducer.categoryData,
+    studentHearData: HomeReducer.studentHearData,
     categoryDetailsData: CategoryReducer.categoryDetailsData,
     defaultCategoryDetailsData: CategoryReducer.defaultCategoryDetailsData,
   };
@@ -471,6 +499,7 @@ const mapDispatchToProps = (dispatch) => {
     categoryListApi: () => dispatch(categoryListApi()),
     cityListAPI: () => dispatch(cityListAPI()),
     defaultCategoryListApi: () => dispatch(defaultCategoryListApi()),
+    studentHearApi: () => dispatch(studentHearApi()),
     AreaListAPI: (data) => dispatch(AreaListAPI(data)),
     categoryDetailsApi: (data) => dispatch(categoryDetailsApi(data)),
   };

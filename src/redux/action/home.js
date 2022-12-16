@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCommonApiHeader } from "../../Utils/utils";
-import { TOPPER_LIST, CATEGORY_BOARD_STANDARDS, CITY_LIST, AREA_LIST } from "../constants";
+import { TOPPER_LIST, CATEGORY_BOARD_STANDARDS, CITY_LIST, AREA_LIST, STUDENT_HEAR } from "../constants";
 
 export const topperListAPI = (data) => {
   return (dispatch, getState) => {
@@ -74,6 +74,24 @@ export const AreaListAPI = (data) => {
   };
 };
 
+export const studentHearApi = (data) => {
+  return (dispatch, getState) => {
+    dispatch(getHomeRequest());
+    axios
+      .get(STUDENT_HEAR, {
+        headers: {
+          ...getCommonApiHeader(),
+        },
+      })
+      .then((response) => {
+        dispatch(getStudentHearRespond(response?.data));
+      })
+      .catch((err) => {
+        dispatch(handleError(err));
+      });
+  };
+};
+
 export const getHomeRequest = (data) => {
   return {
     type: "HOME_Data_REQUESTED",
@@ -104,6 +122,12 @@ export const getCityDataRespond = (data) => {
 export const getAreaDataRespond = (data) => {
   return {
     type: "AREA_DATA_RESPONSE",
+    data: data,
+  };
+};
+export const getStudentHearRespond = (data) => {
+  return {
+    type: "STUDENT_HEAR_DATA_RESPONSE",
     data: data,
   };
 };

@@ -80,6 +80,9 @@ export const CENTER_SERACH = `${BASE_URL}/center-search`;
 //User query api
 export const USER_QUERY = `${BASE_URL}/users-query`;
 
+//Student Hear
+export const STUDENT_HEAR = `${BASE_URL}/student-hear-list`;
+
 //Default course detail List api
 export const DEFAULT_COURSE = `${BASE_URL}/default-category-list`;
 

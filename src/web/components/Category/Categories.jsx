@@ -175,7 +175,7 @@ const Category = ({ categoryListApi, categoryDetailsApi, categoryDetailsData, de
 
       {/* =========================== CONNECT SECTION STARTS HERE =============*/}
       {/* =========================== CONNECT SECTION ENDS HERE ================ */}
-      {/* <Recommendation /> */}
+      <Recommendation />
       <Connect />
     </>
   );

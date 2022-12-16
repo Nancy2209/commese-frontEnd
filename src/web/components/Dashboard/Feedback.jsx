@@ -1,11 +1,14 @@
-// import FeedbackCard from "../Cards/FeedbackCard";
+import React, { useState } from "react";
 import OwlCarousel from "react-owl-carousel";
+import { IMAGE_BASE_URL } from "../../../redux/constants";
+import { parseHtml } from "../../../Utils/utils";
+import Modal from "react-bootstrap/Modal";
 
-function Feedback() {
+const Feedback = ({ studentHearData }) => {
   const OfferingsConfig = {
     loop: true,
-    autoplay: false,
-    autoplayTimeout: 2000,
+    autoplay: true,
+    autoplayTimeout: 3000,
     margin: 0,
     dots: true,
     responsive: {
@@ -20,8 +23,30 @@ function Feedback() {
       },
     },
   };
+  const [show, setShow] = useState(false);
+  const [ReadMoreCWETitle, setReadMoreCWETitle] = useState("");
+  const [ReadMoreCWEDescription, setReadMoreCWEDescription] = useState("");
+  const readMoreModal = (title, description) => {
+    setShow(true);
+    setReadMoreCWETitle(title);
+    setReadMoreCWEDescription(description);
+  };
   return (
     <>
+      <Modal show={show} onHide={() => setShow(false)} centered size="md">
+        <Modal.Body>
+          <div className="articles our-courses p-0">
+            <div className="article border-0">
+              <div className="detail p-2">
+                <h5>{ReadMoreCWETitle}</h5>
+                <div className="description">
+                  <p>{ReadMoreCWEDescription}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
       <section className="cards" id="feedbacks">
         <div className="container">
           <div className="row">
@@ -30,127 +55,44 @@ function Feedback() {
                 Hear it from our <span className="text-blue">students & parents</span>
               </h3>
               <p className="sub-headline text-center">Our alumni and their parents appreciate what we at MT Educare have to offer. Want to join the league? Signup now.</p>
+              <br />
               <OwlCarousel className="owl-theme MT-OwlDots" {...OfferingsConfig}>
-                <div className="item">
-                  <div className="articles">
-                    <div className="article">
-                      <div className="detail">
-                        <div className="description">
-                          <p>"This Course is amazing with the current version, I can’t imagine it, how cool will it be when you finish the all. This Course is amazing with the current version, I can’t imagine it.</p>
-                        </div>
+                {studentHearData &&
+                  studentHearData.data &&
+                  studentHearData.data.map((item) => (
+                    <div className="item">
+                      <div className="articles">
+                        <div className="article">
+                          <div className="detail">
+                            <div className="description">
+                              <p>{item && parseHtml(item.description.substring(0, 150))}</p>
+                              {item && item.description.length > 150 ? (
+                                <span
+                                  onClick={() => {
+                                    readMoreModal(item.title, item.description);
+                                  }}
+                                  role="button"
+                                >
+                                  Read more...
+                                </span>
+                              ) : (
+                                ""
+                              )}
+                            </div>
 
-                        <div className="profile">
-                          <img src="../assets/imgs/img-profile-placeholder.png" alt="placeholder" />
+                            <div className="profile">
+                              <img src={item && IMAGE_BASE_URL + "" + item.image} alt="placeholder" />
 
-                          <div className="user">
-                            <p className="name">Jeremy Bieber</p>
-                            <p className="role">Architect</p>
+                              <div className="user">
+                                <p className="name">{item && item.name}</p>
+                                <p className="role">{item && item.designation}</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="articles">
-                    <div className="article">
-                      <div className="detail">
-                        <div className="description">
-                          <p>"This Course is amazing with the current version, I can’t imagine it, how cool will it be when you finish the all. This Course is amazing with the current version, I can’t imagine it.</p>
-                        </div>
-
-                        <div className="profile">
-                          <img src="../assets/imgs/img-profile-placeholder.png" alt="placeholder" />
-
-                          <div className="user">
-                            <p className="name">Jeremy Bieber</p>
-                            <p className="role">Architect</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="articles">
-                    <div className="article">
-                      <div className="detail">
-                        <div className="description">
-                          <p>"This Course is amazing with the current version, I can’t imagine it, how cool will it be when you finish the all. This Course is amazing with the current version, I can’t imagine it.</p>
-                        </div>
-
-                        <div className="profile">
-                          <img src="../assets/imgs/img-profile-placeholder.png" alt="placeholder" />
-
-                          <div className="user">
-                            <p className="name">Jeremy Bieber</p>
-                            <p className="role">Architect</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="articles">
-                    <div className="article">
-                      <div className="detail">
-                        <div className="description">
-                          <p>"This Course is amazing with the current version, I can’t imagine it, how cool will it be when you finish the all. This Course is amazing with the current version, I can’t imagine it.</p>
-                        </div>
-
-                        <div className="profile">
-                          <img src="../assets/imgs/img-profile-placeholder.png" alt="placeholder" />
-
-                          <div className="user">
-                            <p className="name">Jeremy Bieber</p>
-                            <p className="role">Architect</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="articles">
-                    <div className="article">
-                      <div className="detail">
-                        <div className="description">
-                          <p>"This Course is amazing with the current version, I can’t imagine it, how cool will it be when you finish the all. This Course is amazing with the current version, I can’t imagine it.</p>
-                        </div>
-
-                        <div className="profile">
-                          <img src="../assets/imgs/img-profile-placeholder.png" alt="placeholder" />
-
-                          <div className="user">
-                            <p className="name">Jeremy Bieber</p>
-                            <p className="role">Architect</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="articles">
-                    <div className="article">
-                      <div className="detail">
-                        <div className="description">
-                          <p>"This Course is amazing with the current version, I can’t imagine it, how cool will it be when you finish the all. This Course is amazing with the current version, I can’t imagine it.</p>
-                        </div>
-
-                        <div className="profile">
-                          <img src="../assets/imgs/img-profile-placeholder.png" alt="placeholder" />
-
-                          <div className="user">
-                            <p className="name">Jeremy Bieber</p>
-                            <p className="role">Architect</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  ))}
               </OwlCarousel>
             </div>
           </div>
@@ -158,6 +100,6 @@ function Feedback() {
       </section>
     </>
   );
-}
+};
 
 export default Feedback;
